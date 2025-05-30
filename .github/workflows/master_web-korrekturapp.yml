@@ -23,6 +23,16 @@ jobs:
         with:
           dotnet-version: '9.x'
 
+      - name: Install dotnet-format
+        run: dotnet tool install -g dotnet-format
+
+      - name: Add dotnet tools to PATH
+        run: echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
+        shell: bash
+
+      - name: Run dotnet format check (lint)
+        run: dotnet format --verify-no-changes --verbosity diagnostic
+
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
