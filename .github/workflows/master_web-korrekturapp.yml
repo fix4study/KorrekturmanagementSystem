@@ -31,7 +31,7 @@ jobs:
         shell: bash
 
       - name: Run dotnet format check (lint)
-        run: dotnet format --verify-no-changes --verbosity diagnostic
+        run: dotnet format KorrekturmanagementSystem.sln --verify-no-changes --verbosity diagnostic
 
       - name: Build with dotnet
         run: dotnet build --configuration Release
