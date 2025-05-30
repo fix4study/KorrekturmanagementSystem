@@ -34,8 +34,8 @@ jobs:
         uses: xt0rted/dotnet-format@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          only-changed-files: false
           action: check
+          arguments: --verify-no-changes
 
       - name: Build with dotnet
         run: dotnet build --configuration Release
