@@ -16,22 +16,26 @@ jobs:
       contents: read #This is required for actions/checkout
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '9.x'
 
-      - name: Install dotnet-format
-        run: dotnet tool install -g dotnet-format
+      - name: Add dotnet-format problem matcher
+        uses: xt0rted/dotnet-format-problem-matcher@v1
 
-      - name: Add dotnet tools to PATH
-        run: echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
-        shell: bash
+      - name: Restore dotnet tools
+        uses: xt0rted/dotnet-tool-restore@v1
 
-      - name: Run dotnet format check (lint)
-        run: dotnet format KorrekturmanagementSystem.sln --verify-no-changes --verbosity diagnostic
+      - name: Run dotnet format
+        uses: xt0rted/dotnet-format@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          only-changed-files: false
+          action: check
 
       - name: Build with dotnet
         run: dotnet build --configuration Release
